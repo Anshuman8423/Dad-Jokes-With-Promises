@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dad Jokes Generator</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: #f9f9f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      max-width: 600px;
+      width: 90%;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    .api_body {
+      font-size: 1.2rem;
+      color: #555;
+      margin: 20px 0;
+      min-height: 60px;
+    }
+
+    button {
+      padding: 12px 24px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Welcome To Dad Jokes!</h1>
+    <section class="api_body">Click the button to get a joke 😄</section>
+    <button id="fetchJokes">Get Another Joke</button>
+  </div>
+
+  <script>
+    const apiBody = document.querySelector(".api_body");
+    const fetchBtn = document.getElementById("fetchJokes");
+
+    const apiUrl = "https://icanhazdadjoke.com/";
+
+    const fetchData = () => {
+      fetch(apiUrl, {
+        headers: {
+          accept: "application/json",
+        },
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          apiBody.textContent = data.joke;
+        })
+        .catch((error) => {
+          apiBody.textContent = "Failed to fetch a joke. Try again!";
+          console.error(error);
+        });
+    };
+
+    window.addEventListener("load", fetchData);
+
+    fetchBtn.addEventListener("click", fetchData);
+  </script>
+</body>
+</html>
